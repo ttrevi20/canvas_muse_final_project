@@ -1,19 +1,20 @@
 {
-  "name": "vue-basic-template",
+  "name": "canvas_muse_final_project",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "npm run build && wrangler pages dev dist",
+    "preview": "npm run build && wrangler dev",
     "lint": "eslint . --fix",
     "lint:check": "eslint .",
     "format": "prettier --write src/",
     "format:check": "prettier --check src/",
-    "deploy": "npm run build && wrangler pages deploy dist --project-name canvas-muse"
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
+    "@cloudflare/vite-plugin": "^1.31.2",
     "vue": "^3.5.29",
     "vue-router": "^4.6.3"
   },
@@ -31,6 +32,6 @@
     "tailwindcss": "^4.2.2",
     "vite": "^8.0.3",
     "vue-eslint-parser": "^10.4.0",
-    "wrangler": "^4.71.0"
+    "wrangler": "^4.81.1"
   }
 }

@@ -1,23 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import Saved from '../views/Saved.vue'
+import HomePage from '../views/HomePage.vue'
+import SavedPrompts from '../views/SavedPrompts.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
   },
   {
     path: '/saved',
     name: 'Saved',
-    component: Saved
-  }
+    component: SavedPrompts,
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 })
 
 export default router

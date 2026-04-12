@@ -3,14 +3,30 @@ import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 
 const savedPrompts = ref([])
+const storageKey = 'canvas-muse-prompts'
+
+function getLocalStorageValue() {
+  if (typeof globalThis === 'undefined' || !globalThis.localStorage) {
+    return null
+  }
+  return globalThis.localStorage.getItem(storageKey)
+}
+
+function setLocalStorageValue(value) {
+  if (typeof globalThis === 'undefined' || !globalThis.localStorage) {
+    return
+  }
+  globalThis.localStorage.setItem(storageKey, value)
+}
 
 function loadSavedPrompts() {
-  savedPrompts.value = JSON.parse(localStorage.getItem('canvas-muse-prompts')) || []
+  const stored = getLocalStorageValue()
+  savedPrompts.value = stored ? JSON.parse(stored) : []
 }
 
 function deletePrompt(index) {
   savedPrompts.value.splice(index, 1)
-  localStorage.setItem('canvas-muse-prompts', JSON.stringify(savedPrompts.value))
+  setLocalStorageValue(JSON.stringify(savedPrompts.value))
 }
 
 onMounted(() => {
@@ -85,8 +101,8 @@ onMounted(() => {
           </div>
 
           <button
-            @click="deletePrompt(index)"
             class="mt-6 rounded-xl bg-red-500 px-4 py-2 font-medium text-white transition hover:bg-red-600"
+            @click="deletePrompt(index)"
           >
             Delete
           </button>

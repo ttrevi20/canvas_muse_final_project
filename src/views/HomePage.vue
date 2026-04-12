@@ -68,9 +68,25 @@ const prompts = [
 
 const currentPrompt = ref(null)
 const savedPrompts = ref([])
+const storageKey = 'canvas-muse-prompts'
+
+function getLocalStorageValue() {
+  if (typeof globalThis === 'undefined' || !globalThis.localStorage) {
+    return null
+  }
+  return globalThis.localStorage.getItem(storageKey)
+}
+
+function setLocalStorageValue(value) {
+  if (typeof globalThis === 'undefined' || !globalThis.localStorage) {
+    return
+  }
+  globalThis.localStorage.setItem(storageKey, value)
+}
 
 function loadSavedPrompts() {
-  savedPrompts.value = JSON.parse(localStorage.getItem('canvas-muse-prompts')) || []
+  const stored = getLocalStorageValue()
+  savedPrompts.value = stored ? JSON.parse(stored) : []
 }
 
 function generatePrompt() {
@@ -91,7 +107,7 @@ function savePrompt() {
 
   if (!alreadySaved) {
     savedPrompts.value.push(currentPrompt.value)
-    localStorage.setItem('canvas-muse-prompts', JSON.stringify(savedPrompts.value))
+    setLocalStorageValue(JSON.stringify(savedPrompts.value))
   }
 }
 
@@ -137,8 +153,8 @@ onMounted(() => {
       </p>
 
       <button
-        @click="generatePrompt"
         class="mt-14 rounded-2xl bg-linear-to-r from-purple-600 via-pink-500 to-fuchsia-600 px-10 py-5 text-2xl font-semibold text-white shadow-lg transition hover:scale-105"
+        @click="generatePrompt"
       >
         ✨ Generate New Prompt
       </button>
