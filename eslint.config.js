@@ -13,6 +13,17 @@ export default [
     ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/node_modules/**'],
   },
 
+  {
+    languageOptions: {
+      globals: {
+        localStorage: 'readonly',
+        console: 'readonly',
+        window: 'readonly',
+        document: 'readonly',
+      },
+    },
+  },
+
   js.configs.recommended,
   ...pluginVue.configs['flat/recommended'],
   eslintConfigPrettier,
